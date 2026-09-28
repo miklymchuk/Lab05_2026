@@ -1,5 +1,7 @@
 package com.mycompany.lab06_2026;
 
+import java.util.HashMap;
+import java.util.Map;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -63,6 +65,10 @@ public class App extends Application {
         root.add(clear, 1, 1);
         root.add(orderLabel, 0, 2);
         
+        // To get from Task 01 to Task 02
+        
+        var nextScene = new Button("Next Scene");
+        root.add(nextScene, 2, 1);
         
         var scene = new Scene(root, 640, 480);
         stage.setTitle("Bag Order Form");
@@ -88,6 +94,53 @@ public class App extends Application {
             btnGroup.selectToggle(null);
             orderLabel.setText("");
         });       
+        
+        // Task 02
+        
+        var category = new Label("Category");
+        var itemName = new Label("Item Name, Price ($)");
+               
+        var beverage = new Label("Beverage");
+        var appetizer = new Label("Appetizer");
+        var mainCourse = new Label("Main Course");
+        var dessert = new Label("Dessert");
+        
+        ComboBox<String> beverages = new ComboBox();
+        beverages.getItems().addAll("Coffee, $2.50", "Tea, $2.00", "Soft Drink, $1.75");
+        Map<String, Double> beverageMap = new HashMap<>();
+        beverageMap.put("Coffee, $2.50", 2.50);
+        beverageMap.put("Tea, $2.00", 2.00);
+        beverageMap.put("Soft Drink, $1.75", 1.75);
+        var appetizers = new ComboBox();
+        appetizers.getItems().addAll("Soup, $4.50", "Salad, $3.75", "Spring Rolls, $5.25");
+        Map<String, Double> appetizerMap = new HashMap<>();
+        appetizerMap.put("Soup, $4.50", 4.50);
+        appetizerMap.put("Salad, $3.75", 3.75);
+        appetizerMap.put("Spring Rolls, $5.25", 5.25);
+        var mainCourses = new ComboBox();
+        var mainCourseMap = new HashMap<>();
+        mainCourses.getItems().addAll("Steak, $15.00", "Grilled Chicken, $13.50", "Pasta, $11.75");
+        var desserts = new ComboBox();
+        desserts.getItems().addAll("Apple Pie, $5.95", "Carrot Cake, $4.50", "Pudding, $3.25");
+        
+        var root2 = new GridPane();
+        root2.gridLinesVisibleProperty().set(true);
+        root2.add(category, 0, 0);
+        root2.add(itemName, 1, 0);
+        root2.add(beverage, 0, 1);
+        root2.add(appetizer, 0, 2);
+        root2.add(mainCourse, 0, 3);
+        root2.add(dessert, 0, 4);
+        root2.add(beverages, 1, 1);
+        root2.add(appetizers, 1, 2);
+        root2.add(mainCourses, 1, 3);
+        root2.add(desserts, 1, 4);
+        
+        var scene2 = new Scene(root2, 640, 480);
+        
+        nextScene.setOnAction(event -> {
+            stage.setScene(scene2);
+        });
     }
 
     public static void main(String[] args) {
