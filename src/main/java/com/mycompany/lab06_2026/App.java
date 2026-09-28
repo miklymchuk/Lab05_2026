@@ -113,19 +113,19 @@ public class App extends Application {
         beverageMap.put("Coffee, $2.50", 2.50);
         beverageMap.put("Tea, $2.00", 2.00);
         beverageMap.put("Soft Drink, $1.75", 1.75);
-        var appetizers = new ComboBox();
+        ComboBox<String> appetizers = new ComboBox();
         appetizers.getItems().addAll("Soup, $4.50", "Salad, $3.75", "Spring Rolls, $5.25");
         Map<String, Double> appetizerMap = new HashMap<>();
         appetizerMap.put("Soup, $4.50", 4.50);
         appetizerMap.put("Salad, $3.75", 3.75);
         appetizerMap.put("Spring Rolls, $5.25", 5.25);
-        var mainCourses = new ComboBox();        
+        ComboBox<String> mainCourses = new ComboBox();        
         mainCourses.getItems().addAll("Steak, $15.00", "Grilled Chicken, $13.50", "Pasta, $11.75");
-        var mainCourseMap = new HashMap<>();
+        Map<String, Double> mainCourseMap = new HashMap<>();
         mainCourseMap.put("Steak, $15.00", 15.00);
         mainCourseMap.put("Grilled Chicken, $13.50", 13.50);
         mainCourseMap.put("Pasta, $11.75", 11.75);
-        var desserts = new ComboBox();
+        ComboBox<String> desserts = new ComboBox();
         desserts.getItems().addAll("Apple Pie, $5.95", "Carrot Cake, $4.50", "Pudding, $3.25");
         Map<String, Double> dessertMap = new HashMap<>();
         dessertMap.put("Apple Pie, $5.95", 5.95);
@@ -139,6 +139,9 @@ public class App extends Application {
         tipSlider.setMajorTickUnit(5.0);
         tipSlider.setMinorTickCount(4);
         tipSlider.setSnapToTicks(true);
+        
+        var order2 = new Button("Order");
+        var clear2 = new Button("Clear");
         
         var root2 = new GridPane();
         root2.gridLinesVisibleProperty().set(true);
@@ -154,11 +157,20 @@ public class App extends Application {
         root2.add(mainCourses, 1, 3);
         root2.add(desserts, 1, 4);
         root2.add(tipSlider, 1, 5);
+        root2.add(order, 0, 6);
+        root2.add(clear, 1, 6);
         
         var scene2 = new Scene(root2, 640, 480);
         
         nextScene.setOnAction(event -> {
             stage.setScene(scene2);
+        });
+        
+        order2.setOnAction(event -> {
+            double cost = beverageMap.get(beverages.getSelectionModel().getSelectedItem())
+                    + appetizerMap.get(appetizers.getSelectionModel().getSelectedItem())
+                    + mainCourseMap.get(mainCourses.getSelectionModel().getSelectedItem())
+                    + dessertMap.get(desserts.getSelectionModel().getSelectedItem());
         });
     }
 
