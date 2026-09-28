@@ -11,6 +11,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -104,6 +105,7 @@ public class App extends Application {
         var appetizer = new Label("Appetizer");
         var mainCourse = new Label("Main Course");
         var dessert = new Label("Dessert");
+        var tips = new Label("Tips");
         
         ComboBox<String> beverages = new ComboBox();
         beverages.getItems().addAll("Coffee, $2.50", "Tea, $2.00", "Soft Drink, $1.75");
@@ -117,11 +119,26 @@ public class App extends Application {
         appetizerMap.put("Soup, $4.50", 4.50);
         appetizerMap.put("Salad, $3.75", 3.75);
         appetizerMap.put("Spring Rolls, $5.25", 5.25);
-        var mainCourses = new ComboBox();
-        var mainCourseMap = new HashMap<>();
+        var mainCourses = new ComboBox();        
         mainCourses.getItems().addAll("Steak, $15.00", "Grilled Chicken, $13.50", "Pasta, $11.75");
+        var mainCourseMap = new HashMap<>();
+        mainCourseMap.put("Steak, $15.00", 15.00);
+        mainCourseMap.put("Grilled Chicken, $13.50", 13.50);
+        mainCourseMap.put("Pasta, $11.75", 11.75);
         var desserts = new ComboBox();
         desserts.getItems().addAll("Apple Pie, $5.95", "Carrot Cake, $4.50", "Pudding, $3.25");
+        Map<String, Double> dessertMap = new HashMap<>();
+        dessertMap.put("Apple Pie, $5.95", 5.95);
+        dessertMap.put("Carrot Cake, $4.50", 4.50);
+        dessertMap.put("Pudding, $3.25", 3.25);
+        
+        var tipSlider = new Slider(0.0, 20.0, 10.0);
+        tipSlider.setPrefHeight(25.0);
+        tipSlider.setShowTickLabels(true);
+        tipSlider.setShowTickMarks(true);
+        tipSlider.setMajorTickUnit(5.0);
+        tipSlider.setMinorTickCount(4);
+        tipSlider.setSnapToTicks(true);
         
         var root2 = new GridPane();
         root2.gridLinesVisibleProperty().set(true);
@@ -131,10 +148,12 @@ public class App extends Application {
         root2.add(appetizer, 0, 2);
         root2.add(mainCourse, 0, 3);
         root2.add(dessert, 0, 4);
+        root2.add(tips, 0, 5);
         root2.add(beverages, 1, 1);
         root2.add(appetizers, 1, 2);
         root2.add(mainCourses, 1, 3);
         root2.add(desserts, 1, 4);
+        root2.add(tipSlider, 1, 5);
         
         var scene2 = new Scene(root2, 640, 480);
         
