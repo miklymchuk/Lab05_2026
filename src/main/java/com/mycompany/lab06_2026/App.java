@@ -23,22 +23,30 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     @Override
-    public void start(Stage stage) {  
+    public void start(Stage stage) { 
+        // Task 01
+        
         var bagList = new ListView();
         bagList.getItems().addAll("Full Decorative", "Beaded", "Pirate Design", "Fringed", "Leather", "Plain");
         bagList.setPrefHeight(140);
+        bagList.getSelectionModel().selectFirst();
         
         var bagCombo = new ComboBox();
         bagCombo.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
         bagCombo.setTranslateY(-58);
+        bagCombo.getSelectionModel().selectFirst();
         
         var btnGroup = new ToggleGroup();
         var btn1 = new RadioButton("Small");
+        btn1.setUserData("Small");
         btn1.setToggleGroup(btnGroup);
         var btn2 = new RadioButton("Medium");
+        btn2.setUserData("Medium");
         btn2.setToggleGroup(btnGroup);
         var btn3 = new RadioButton("Large");
+        btn3.setUserData("Large");
         btn3.setToggleGroup(btnGroup);
+        btn1.setSelected(true);
         
         var btnLayout = new VBox(btn1, btn2, btn3);
         
@@ -62,7 +70,16 @@ public class App extends Application {
         var scene = new Scene(root, 640, 480);
         stage.setTitle("Bag Order Form");
         stage.setScene(scene);
-        stage.show();       
+        stage.show();   
+        
+        order.setOnAction(event -> {           
+            if (bagCombo.getSelectionModel().getSelectedItem().toString().equals("1")) {
+                orderLabel.setText("You ordered 1 " + btnGroup.getSelectedToggle().getUserData().toString() + " " + bagList.getSelectionModel().getSelectedItem().toString() + " Bag.");
+            } else {
+                orderLabel.setText("You ordered " + bagCombo.getSelectionModel().getSelectedItem().toString() + " " + btnGroup.getSelectedToggle().getUserData().toString() + " " + bagList.getSelectionModel().getSelectedItem().toString() + " Bags.");
+            }
+            
+        });    
     }
 
     public static void main(String[] args) {
