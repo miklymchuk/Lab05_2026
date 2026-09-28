@@ -29,12 +29,10 @@ public class App extends Application {
         var bagList = new ListView();
         bagList.getItems().addAll("Full Decorative", "Beaded", "Pirate Design", "Fringed", "Leather", "Plain");
         bagList.setPrefHeight(140);
-        bagList.getSelectionModel().selectFirst();
         
         var bagCombo = new ComboBox();
         bagCombo.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
         bagCombo.setTranslateY(-58);
-        bagCombo.getSelectionModel().selectFirst();
         
         var btnGroup = new ToggleGroup();
         var btn1 = new RadioButton("Small");
@@ -46,7 +44,6 @@ public class App extends Application {
         var btn3 = new RadioButton("Large");
         btn3.setUserData("Large");
         btn3.setToggleGroup(btnGroup);
-        btn1.setSelected(true);
         
         var btnLayout = new VBox(btn1, btn2, btn3);
         
@@ -72,14 +69,25 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();   
         
-        order.setOnAction(event -> {           
+        order.setOnAction(event -> { 
+            if (bagList.getSelectionModel().getSelectedItem() == null || bagCombo.getSelectionModel().getSelectedItem() == null || btnGroup.getSelectedToggle().getUserData() == null) {
+                orderLabel.setText("You did not enter all the required order information.");
+                return;
+            }
+            
             if (bagCombo.getSelectionModel().getSelectedItem().toString().equals("1")) {
                 orderLabel.setText("You ordered 1 " + btnGroup.getSelectedToggle().getUserData().toString() + " " + bagList.getSelectionModel().getSelectedItem().toString() + " Bag.");
             } else {
                 orderLabel.setText("You ordered " + bagCombo.getSelectionModel().getSelectedItem().toString() + " " + btnGroup.getSelectedToggle().getUserData().toString() + " " + bagList.getSelectionModel().getSelectedItem().toString() + " Bags.");
-            }
-            
+            }         
         });    
+        
+        clear.setOnAction(event -> {
+            bagList.getSelectionModel().clearSelection();
+            bagCombo.getSelectionModel().clearSelection();
+            btnGroup.selectToggle(null);
+            orderLabel.setText("");
+        });       
     }
 
     public static void main(String[] args) {
