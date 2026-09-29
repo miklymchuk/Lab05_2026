@@ -103,7 +103,7 @@ public class App extends Application {
                
         var beverage = new Label("Beverage");
         var appetizer = new Label("Appetizer");
-        var mainCourse = new Label("Main Course");
+        var mainCourse = new Label("Main Course                 ");
         var dessert = new Label("Dessert");
         var tips = new Label("Tips");
         
@@ -143,8 +143,16 @@ public class App extends Application {
         var order2 = new Button("Order");
         var clear2 = new Button("Clear");
         
+        var orderLabel2 = new Label("");
+        
         var root2 = new GridPane();
         root2.gridLinesVisibleProperty().set(true);
+        root2.setAlignment(Pos.CENTER);
+        root2.setScaleX(1.5);
+        root2.setScaleY(1.5);
+        root.setHgap(5.0);
+        root.setVgap(5.0);
+        root.setPrefWidth(400);
         root2.add(category, 0, 0);
         root2.add(itemName, 1, 0);
         root2.add(beverage, 0, 1);
@@ -157,8 +165,9 @@ public class App extends Application {
         root2.add(mainCourses, 1, 3);
         root2.add(desserts, 1, 4);
         root2.add(tipSlider, 1, 5);
-        root2.add(order, 0, 6);
-        root2.add(clear, 1, 6);
+        root2.add(order2, 0, 6);
+        root2.add(clear2, 1, 6);
+        root2.add(orderLabel2, 0, 7);
         
         var scene2 = new Scene(root2, 640, 480);
         
@@ -167,11 +176,36 @@ public class App extends Application {
         });
         
         order2.setOnAction(event -> {
-            double cost = beverageMap.get(beverages.getSelectionModel().getSelectedItem())
-                    + appetizerMap.get(appetizers.getSelectionModel().getSelectedItem())
-                    + mainCourseMap.get(mainCourses.getSelectionModel().getSelectedItem())
-                    + dessertMap.get(desserts.getSelectionModel().getSelectedItem());
+            double beverageCost = 0.0;
+            double appetizerCost = 0.0;
+            double mainCourseCost = 0.0;
+            double dessertCost = 0.0;
+            if (beverages.getSelectionModel().getSelectedItem() != null) {
+                beverageCost = beverageMap.get(beverages.getSelectionModel().getSelectedItem());
+            }
+            if (appetizers.getSelectionModel().getSelectedItem() != null) {
+                appetizerCost = appetizerMap.get(appetizers.getSelectionModel().getSelectedItem());
+            }
+            if (mainCourses.getSelectionModel().getSelectedItem() != null) {
+                mainCourseCost = mainCourseMap.get(mainCourses.getSelectionModel().getSelectedItem());
+            }
+            if (desserts.getSelectionModel().getSelectedItem() != null) {
+                dessertCost = dessertMap.get(desserts.getSelectionModel().getSelectedItem());
+            }
+            
+            double totalCost = beverageCost + appetizerCost + mainCourseCost + dessertCost;
+            totalCost+=(totalCost*tipSlider.valueProperty().getValue()/100);
+            orderLabel2.setText("Your bill is $" + totalCost);
         });
+        
+        clear2.setOnAction(event -> {
+            beverages.getSelectionModel().clearSelection();
+            appetizers.getSelectionModel().clearSelection();
+            mainCourses.getSelectionModel().clearSelection();
+            desserts.getSelectionModel().clearSelection();
+            orderLabel2.setText("");
+        });
+        
     }
 
     public static void main(String[] args) {
